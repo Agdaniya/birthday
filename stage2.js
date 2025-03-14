@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (i === size - 1 && j === size - 1) continue; // Leave one space empty
 
                 let piece = document.createElement("img");
-                piece.src = `puzzle_pieces/piece_${i}_${j}.png`;
+                piece.src = `puzzle_pieces/puzzle_piece_${i}_${j}.png`;
                 piece.classList.add("puzzle-piece");
                 piece.dataset.row = i;
                 piece.dataset.col = j;
