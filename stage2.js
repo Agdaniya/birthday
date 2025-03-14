@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Create celebration container
     const celebrationContainer = document.createElement("div");
     celebrationContainer.id = "celebration-container";
-    celebrationContainer.style.display = "none";
+    celebrationContainer.style.display = "none"; // Start hidden
     celebrationContainer.style.position = "absolute";
     celebrationContainer.style.top = "50%";
     celebrationContainer.style.left = "50%";
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (i === size - 1 && j === size - 1) continue; // Leave one space empty
 
                 let piece = document.createElement("img");
-                piece.src = `puzzle_pieces/puzzle_piece_${i}_${j}.png`;
+                piece.src = `puzzle_pieces/piece_${i}_${j}.png`;
                 piece.classList.add("puzzle-piece");
                 piece.dataset.row = i;
                 piece.dataset.col = j;
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (isCorrect && emptyX === size - 1 && emptyY === size - 1) {
-            // Show celebration container
+            // Show celebration container only when puzzle is solved
             celebrationContainer.style.display = "block";
             
             // Add animation to make it more festive
