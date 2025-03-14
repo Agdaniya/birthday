@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achu's Birthday Adventure</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #eaeaea;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background-color: rgba(30, 30, 50, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #ffcc00;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        h2 {
+            color: #ffaa00;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .stage { 
+            display: none; 
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .active { 
+            display: block; 
+        }
+        
+        button {
+            background: linear-gradient(to bottom, #ffcc00, #ff9500);
+            color: #222;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            margin: 10px 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to bottom, #ffdd20, #ffaa20);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Achu's Birthday Adventure 🎉</h1>
+
+        <!-- Start Button -->
+        <div id="start-screen" class="active">
+            <p>Welcome, Achu! Your gift is hidden. Solve the puzzles to find it!</p>
+            <button onclick="nextStage('stage1'); createConfetti();">Start Adventure</button>
+        </div>
+
+                <!-- Stage 1: Trivia -->
+        <div id="stage1" class="stage">
+            <h2>Stage 1: The Mysterious Message</h2>
+            <p id="question-text">Loading question...</p>
+            
+            <div id="options">
+                <button onclick="checkTriviaAnswer(0)">Option 1</button>
+                <button onclick="checkTriviaAnswer(1)">Option 2</button>
+                <button onclick="checkTriviaAnswer(2)">Option 3</button>
+                <button onclick="checkTriviaAnswer(3)">Option 4</button>
+            </div>
+            
+            <div id="other-answer" style="display: none; margin-top: 15px;">
+                <input type="text" id="other-input" placeholder="Type your answer">
+                <button onclick="checkOtherAnswer()">Submit</button>
+            </div>
+        </div>
+
+        
+        <div id="stage2" class="stage">
+            <h2>Stage 2: The Parkour Challenge</h2>
+            <p>Use arrow keys to move & jump to reach the goal!</p>
+            <iframe  src="https://scratch.mit.edu/projects/1147369876/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen width="800" height="600" allowfullscreen></iframe>
+            <button onclick="nextStage('stage3')">Next Stage</button>
+        </div>
+        <!-- Stage 3: Pixel Art Puzzle -->
+<div id="stage3" class="stage">
+    <h2>Stage 3: The Pixel Puzzle Challenge</h2>
+    <p>Rearrange the pieces to complete the picture!</p>
+    <div id="puzzle-container"></div>
+    <button onclick="shuffle()">Shuffle</button>
+    <button onclick="checkWin()">Check Answer</button>
+    <button onclick="nextStage('stage4')">Next Stage</button>
+</div>
+
+
+
+    </div>
+
+    <script>
+        function nextStage(stageId) {
+            document.querySelectorAll('.stage, #start-screen').forEach(div => div.classList.remove('active'));
+            document.getElementById(stageId).classList.add('active');
+        }
+
+        function checkAnswer(answer) {
+            if (answer === 'Minecraft') {
+                createConfetti();
+                setTimeout(() => {
+                    alert("Correct! Moving to the next stage.");
+                    nextStage('stage2');
+                }, 500);
+            } else {
+                alert("Wrong answer! Try again.");
+            }
+        }
+        
+        function createConfetti() {
+            const colors = ['#ffcc00', '#ff6b6b', '#4ecdc4', '#7cb9e8', '#c3aed6'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.opacity = 1;
+                document.body.appendChild(confetti);
+                
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+                
+                const duration = Math.random() * 3 + 2;
+                confetti.style.transition = `all ${duration}s ease`;
+                
+                setTimeout(() => {
+                    confetti.style.top = '100vh';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg) translateX(${Math.random() * 100 - 50}px)`;
+                    confetti.style.opacity = 0;
+                }, 10);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, duration * 1000);
+            }
+        }
+    </script>
+    <script src="main.js"></script>
+    <script src="stage2.js"></script>
+
+</body>
+</html>
